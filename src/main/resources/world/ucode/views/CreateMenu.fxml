@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="420.0" spacing="50.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="world.ucode.control.CreateMenuController">
+   <children>
+      <TextField fx:id="tfieldPetName" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="200.0" promptText="Yours new pets name" />
+      <Button mnemonicParsing="false" onAction="#createNewPet" text="Create" />
+   </children>
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
+   <padding>
+      <Insets top="100.0" />
+   </padding>
+</VBox>
