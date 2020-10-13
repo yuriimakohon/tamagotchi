@@ -1,4 +1,4 @@
-package world.ucode.main;
+package world.ucode.model.main;
 
 import javafx.application.Application;
 import javafx.stage.Stage;

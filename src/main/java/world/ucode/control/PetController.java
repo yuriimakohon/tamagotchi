@@ -1,7 +1,7 @@
 package world.ucode.control;
 
 import javafx.fxml.FXML;
-import world.ucode.model.Pet;
+import world.ucode.model.pet.Pet;
 import world.ucode.view.PetView;
 
 public class PetController extends PetView {

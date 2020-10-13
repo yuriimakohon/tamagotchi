@@ -1,6 +1,6 @@
-package world.ucode.observer;
+package world.ucode.view;
 
-import world.ucode.model.Pet;
+import world.ucode.model.pet.Pet;
 import world.ucode.model.stat.Stat;
 
 public interface PetObserver {

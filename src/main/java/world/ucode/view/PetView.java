@@ -2,9 +2,8 @@ package world.ucode.view;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import world.ucode.model.Pet;
+import world.ucode.model.pet.Pet;
 import world.ucode.model.stat.Stat;
-import world.ucode.observer.PetObserver;
 
 public class PetView implements PetObserver {
     protected static final Pet pet = new Pet();

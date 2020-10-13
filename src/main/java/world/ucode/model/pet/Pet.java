@@ -1,9 +1,8 @@
-package world.ucode.model;
+package world.ucode.model.pet;
 
 import javafx.application.Platform;
 import world.ucode.model.stat.*;
-import world.ucode.observer.PetObserver;
-import world.ucode.observer.PetPublisher;
+import world.ucode.view.PetObserver;
 
 public class Pet implements PetPublisher {
     public enum Species {
