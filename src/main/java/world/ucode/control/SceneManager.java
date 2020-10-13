@@ -10,7 +10,8 @@ import java.util.HashMap;
 public class SceneManager {
     public enum States {
         MAIN_MENU("/world/ucode/views/MainMenu.fxml"),
-        CREATE_MENU("/world/ucode/views/CreateMenu.fxml");
+        CREATE_MENU("/world/ucode/views/CreateMenu.fxml"),
+        PET("/world/ucode/views/Pet.fxml");
 
         private final String url;
 
@@ -19,34 +20,29 @@ public class SceneManager {
         }
     }
 
-    private static SceneManager instance;
-    private static final HashMap<String, Scene> scenes = new HashMap<>();
-    private static Stage stage;
-
     private SceneManager() {}
 
+    private static final HashMap<States, Scene> scenes = new HashMap<>();
+    private static Stage stage;
+
     public static void setStage(Stage stage) {
-        if (stage == null) {
+        if (stage == null || SceneManager.stage != null) {
             throw new IllegalArgumentException();
         }
         SceneManager.stage = stage;
-    }
 
-    public static SceneManager getInstance() {
-        if (instance == null) {
-            instance = new SceneManager();
+        for (States state : States.values()) {
+            FXMLLoader loader = new FXMLLoader(SceneManager.class.getResource(state.url));
+            try {
+                Scene scene = new Scene(loader.load());
+                scenes.put(state, scene);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-        return instance;
     }
 
     public static void switchScene(States state) {
-        Scene scene = scenes.computeIfAbsent(state.url, u -> {
-            try {
-                return new Scene(FXMLLoader.load(SceneManager.class.getResource(u)));
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-        });
-        stage.setScene(scene);
+        stage.setScene(scenes.get(state));
     }
 }
