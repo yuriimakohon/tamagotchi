@@ -1,6 +1,7 @@
 package world.ucode.model.pet;
 
 import javafx.application.Platform;
+import world.ucode.control.SaveManager;
 import world.ucode.model.stat.*;
 import world.ucode.view.PetObserver;
 
@@ -76,6 +77,7 @@ public class Pet implements PetPublisher {
         }
         happiness = new HappinessStat(100, 0);
         observer.initObserver(this);
+        SaveManager.savePet(this);
     }
 
     // Actions with Pet
