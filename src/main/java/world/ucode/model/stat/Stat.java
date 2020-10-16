@@ -10,7 +10,7 @@ public abstract class Stat {
     }
 
     private final Type type;
-    private final float maxValue;
+    private float maxValue;
     private float value;
     private float changer;
 
@@ -23,6 +23,10 @@ public abstract class Stat {
 
     public Type getType() {
         return type;
+    }
+
+    public void setMaxValue(float maxValue) {
+        this.maxValue = maxValue;
     }
 
     public float getMaxValue() {

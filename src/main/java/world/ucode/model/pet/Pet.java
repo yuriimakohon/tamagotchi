@@ -5,13 +5,16 @@ import world.ucode.control.SaveManager;
 import world.ucode.model.stat.*;
 import world.ucode.view.PetObserver;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class Pet implements PetPublisher {
     public enum Species {
         CAT,
         DOG,
     }
 
-    // ==============| Publisher part |==============
+    // ==========| Publisher interface part |==========
     private PetObserver observer;
 
     @Override
@@ -39,7 +42,13 @@ public class Pet implements PetPublisher {
 
     public void start() {
         Thread thread = new Thread(() -> {
-            Runnable updater = this::updateStats;
+            Runnable updater = new Runnable() {
+                @Override
+                public void run() {
+                    updateStats();
+                    SaveManager.updatePetSave(getInstance());
+                }
+            };
             while (true) {
                 try {
                     Thread.sleep(1000);
@@ -77,7 +86,6 @@ public class Pet implements PetPublisher {
         }
         happiness = new HappinessStat(100, 0);
         observer.initObserver(this);
-        SaveManager.savePet(this);
     }
 
     // Actions with Pet
@@ -103,6 +111,10 @@ public class Pet implements PetPublisher {
     }
 
     // Stat getters
+    private Pet getInstance() {
+        return this;
+    }
+
     public String getName() {
         return name;
     }

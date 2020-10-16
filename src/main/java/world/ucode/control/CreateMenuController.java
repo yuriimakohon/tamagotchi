@@ -9,7 +9,7 @@ public class CreateMenuController {
 
     @FXML
     void createNewPet() {
-        PetController.initPet(tfieldPetName.getText());
+        PetController.createNewPet(tfieldPetName.getText());
         SceneManager.switchScene(SceneManager.States.PET);
     }
 }

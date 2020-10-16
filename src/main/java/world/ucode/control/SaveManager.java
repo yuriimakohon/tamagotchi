@@ -3,9 +3,8 @@ package world.ucode.control;
 import org.sqlite.SQLiteDataSource;
 import world.ucode.model.pet.Pet;
 
-import java.io.File;
-import java.io.IOException;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -13,6 +12,7 @@ public class SaveManager {
     private static final SQLiteDataSource dataSource = new SQLiteDataSource();
     private static Connection connection;
     private static Statement statement;
+    private static int currentSaveId;
 
     private SaveManager() {
     }
@@ -41,9 +41,51 @@ public class SaveManager {
                 createTable();
             }
             statement.execute("INSERT INTO pets" + generatePetValues(pet) + ";");
+            updateCurrentSaveId();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void updatePetSave(Pet pet) {
+        try {
+            statement.execute("UPDATE pets SET" + generatePetUpdate(pet) + ";");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void loadPet(int saveId, Pet pet) {
+        try (ResultSet result = statement.executeQuery("SELECT * FROM pets WHERE id = " + saveId + ";")) {
+            if (result.next()) {
+                pet.init(result.getString("name"), Pet.Species.CAT);
+                pet.getHealth().setMaxValue(result.getFloat("max_health"));
+                pet.getHealth().setValue(result.getFloat("health"));
+                pet.getHunger().setMaxValue(result.getFloat("max_hunger"));
+                pet.getHunger().setValue(result.getFloat("hunger"));
+                pet.getThirst().setMaxValue(result.getFloat("max_thirst"));
+                pet.getThirst().setValue(result.getFloat("thirst"));
+                pet.getHappiness().setMaxValue(result.getFloat("max_happiness"));
+                pet.getHappiness().setValue(result.getFloat("happiness"));
+                pet.getCleanliness().setMaxValue(result.getFloat("max_cleanliness"));
+                pet.getCleanliness().setValue(result.getFloat("cleanliness"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        updateCurrentSaveId(saveId);
+    }
+
+    private static void updateCurrentSaveId() {
+        try (ResultSet result = statement.executeQuery("SELECT last_insert_rowid();")) {
+            result.next();
+            currentSaveId = result.getInt(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    private static void updateCurrentSaveId(int id) {
+        currentSaveId = id;
     }
 
     private static String generatePetValues(Pet pet) {
@@ -64,6 +106,16 @@ public class SaveManager {
         return values;
     }
 
+    private static String generatePetUpdate(Pet pet) {
+        String update = " health = " + pet.getHealth().getValue() + "," +
+                "hunger = " + pet.getHunger().getValue() + "," +
+                "thirst = " + pet.getThirst().getValue() + "," +
+                "happiness = " + pet.getHappiness().getValue() + "," +
+                "cleanliness = " + pet.getCleanliness().getValue() +
+                " WHERE id = " + currentSaveId;
+        return update;
+    }
+
     private static void createTable() {
         try {
             statement.execute("CREATE TABLE pets (" +
@@ -80,7 +132,7 @@ public class SaveManager {
                     "happiness FLOAT," +
                     "cleanliness FLOAT" +
                     ");");
-        } catch (SQLException throwables) {
+        } catch (SQLException e) {
         }
     }
 }

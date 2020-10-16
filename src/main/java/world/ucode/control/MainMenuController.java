@@ -13,4 +13,10 @@ public class MainMenuController {
     private void newGame() {
         SceneManager.switchScene(SceneManager.States.CREATE_MENU);
     }
+
+    @FXML
+    private void loadGame() {
+        PetController.loadPetSave(1);
+        SceneManager.switchScene(SceneManager.States.PET);
+    }
 }
