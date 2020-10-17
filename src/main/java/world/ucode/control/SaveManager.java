@@ -58,8 +58,8 @@ public class SaveManager {
     public static void loadPet(int saveId, Pet pet) {
         try (ResultSet result = statement.executeQuery("SELECT * FROM pets WHERE id = " + saveId + ";")) {
             if (result.next()) {
-                pet.init(result.getString("name"), Pet.Species.CAT);
-                pet.getHealth().setMaxValue(result.getFloat("max_health"));
+                Pet.Species type = Pet.Species.valueOf(result.getString("type"));
+                pet.init(result.getString("name"), type, result.getInt("max_health"));
                 pet.getHealth().setValue(result.getFloat("health"));
                 pet.getHunger().setMaxValue(result.getFloat("max_hunger"));
                 pet.getHunger().setValue(result.getFloat("hunger"));
@@ -89,9 +89,10 @@ public class SaveManager {
     }
 
     private static String generatePetValues(Pet pet) {
-        String values = " (name, max_health, max_hunger, max_thirst, max_happiness, " +
+        String values = " (name, type, max_health, max_hunger, max_thirst, max_happiness, " +
                 "max_cleanliness, health, hunger, thirst, happiness, cleanliness) VALUES " +
                 "(" + "'" + pet.getName() + "', " +
+                "'" + pet.getType().toString() + "', " +
                 pet.getHealth().getMaxValue() + ", " +
                 pet.getHunger().getMaxValue() + ", " +
                 pet.getThirst().getMaxValue() + ", " +
@@ -120,7 +121,8 @@ public class SaveManager {
         try {
             statement.execute("CREATE TABLE pets (" +
                     "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    "name VARCHAR(20)," +
+                    "name VARCHAR(25)," +
+                    "type VARCHAR(10)," +
                     "max_health FLOAT," +
                     "max_hunger FLOAT," +
                     "max_thirst FLOAT," +

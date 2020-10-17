@@ -5,8 +5,8 @@ import world.ucode.model.pet.Pet;
 import world.ucode.view.PetView;
 
 public class PetController extends PetView {
-    static void createNewPet(String name) {
-        pet.init(name, Pet.Species.CAT);
+    static void createNewPet(String name, Pet.Species type, int maxHealth) {
+        pet.init(name, type, maxHealth);
         SaveManager.savePet(pet);
         pet.start();
     }

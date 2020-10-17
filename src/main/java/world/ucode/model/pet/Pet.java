@@ -5,9 +5,6 @@ import world.ucode.control.SaveManager;
 import world.ucode.model.stat.*;
 import world.ucode.view.PetObserver;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 public class Pet implements PetPublisher {
     public enum Species {
         CAT,
@@ -34,6 +31,7 @@ public class Pet implements PetPublisher {
 
     // ==============| Pet part |==============
     private String name;
+    Species type;
     private Stat health;
     private Stat hunger;
     private Stat thirst;
@@ -71,19 +69,20 @@ public class Pet implements PetPublisher {
         notifyAllStats(this);
     }
 
-    public void init(String name, Species specie) {
+    public void init(String name, Species specie, int maxHealth) {
         this.name = name;
-        if (specie == Species.CAT){
-            health = new HealthStat(250, 0);
+        if (specie == Species.CAT) {
+            type = Species.CAT;
             hunger = new HungerStat( 300, -0.5f);
             thirst = new ThirstStat(200, -0.8f);
             cleanliness = new CleanlinessStat(100, -0.1f);
         } else if (specie == Species.DOG) {
-            health = new HealthStat(400, 0);
+            type = Species.DOG;
             hunger = new HungerStat(350, -1);
             thirst = new ThirstStat(200, -1);
             cleanliness = new CleanlinessStat(100, -0.3f);
         }
+        health = new HealthStat(maxHealth, 0);
         happiness = new HappinessStat(100, 0);
         observer.initObserver(this);
     }
@@ -110,7 +109,7 @@ public class Pet implements PetPublisher {
         notifyStat(happiness);
     }
 
-    // Stat getters
+    // Pet getters
     private Pet getInstance() {
         return this;
     }
@@ -118,6 +117,10 @@ public class Pet implements PetPublisher {
     public String getName() {
         return name;
     }
+    public Species getType() {
+        return type;
+    }
+
     public Stat getHealth() {
         return health;
     }
