@@ -2,6 +2,7 @@ package world.ucode.model.pet;
 
 import javafx.application.Platform;
 import world.ucode.control.SaveManager;
+import world.ucode.model.petEvent.PetEvent;
 import world.ucode.model.stat.*;
 import world.ucode.view.PetObserver;
 
@@ -61,12 +62,50 @@ public class Pet implements PetPublisher {
     }
 
     public void updateStats() {
+        checkProsperity();
         health.update();
         hunger.update();
         thirst.update();
         happiness.update();
         cleanliness.update();
         notifyAllStats(this);
+    }
+
+    private void checkProsperity() {
+        if (health.getValue() < health.getMaxValue() / 3) {
+            happiness.addValue(-2);
+            if (health.getMaxValue() == 0)
+                System.out.println("GAME OVER: HEALTH");
+        }
+        if (happiness.getValue() < happiness.getMaxValue() / 2) {
+            hunger.addValue(-2);
+            if (happiness.getValue() < 20) {
+                hunger.addValue(-2);
+                if (happiness.getValue() == 0)
+                    System.out.println("GAME OVER: HAPPINESS");
+            }
+        }
+        if (hunger.getValue() < 40) {
+            happiness.addValue(-1);
+            if (hunger.getValue() == 0) {
+                health.addValue(-3);
+                happiness.addValue(-1);
+            }
+        }
+        if (thirst.getValue() < 10) {
+            happiness.addValue(-0.5f);
+            if (thirst.getValue() == 0) {
+                health.addValue(-2);
+                happiness.addValue(-0.5f);
+            }
+        }
+        if (cleanliness.getValue() < 20) {
+            happiness.addValue(-2);
+            if (cleanliness.getValue() == 0) {
+                health.addValue(-1);
+                happiness.addValue(-3);
+            }
+        }
     }
 
     public void init(String name, Species specie, int maxHealth) {
@@ -89,15 +128,19 @@ public class Pet implements PetPublisher {
 
     // Actions with Pet
     public void cure() {
-        health.setValue(health.getValue() + 40);
+        health.setValue(health.getValue() + 20);
         notifyStat(health);
     }
     public void feed() {
-        hunger.setValue(hunger.getValue() + 60);
+        PetEvent.tryEvent(PetEvent.Type.INTOXICATION, 10, this);
+        PetEvent.tryEvent(PetEvent.Type.SATIETY, 30, this);
+
+        hunger.addValue(30);
         notifyStat(hunger);
     }
     public void giveDrink() {
-        thirst.setValue(thirst.getValue() + 40);
+        PetEvent.tryEvent(PetEvent.Type.INTOXICATION, 7, this);
+        thirst.addValue(20);
         notifyStat(thirst);
     }
     public void clean() {
@@ -105,7 +148,8 @@ public class Pet implements PetPublisher {
         notifyStat(cleanliness);
     }
     public void play() {
-        happiness.setValue(happiness.getValue() + 30);
+        PetEvent.tryEvent(PetEvent.Type.INJURY, 10, this);
+        happiness.setValue(happiness.getValue() + 10);
         notifyStat(happiness);
     }
 
