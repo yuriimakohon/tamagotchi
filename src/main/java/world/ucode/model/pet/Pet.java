@@ -136,6 +136,7 @@ public class Pet implements PetPublisher {
         PetEvent.tryEvent(PetEvent.Type.SATIETY, 30, this);
 
         hunger.addValue(30);
+        cleanliness.addValue(-2);
         notifyStat(hunger);
     }
     public void giveDrink() {
