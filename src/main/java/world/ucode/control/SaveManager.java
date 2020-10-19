@@ -2,7 +2,6 @@ package world.ucode.control;
 
 import javafx.collections.ObservableList;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import org.sqlite.SQLiteDataSource;
 import world.ucode.model.pet.Pet;
 import world.ucode.view.LoadMenuView;
@@ -11,7 +10,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 
 public class SaveManager {
     private static final SQLiteDataSource dataSource = new SQLiteDataSource();
@@ -40,11 +38,7 @@ public class SaveManager {
 
     public static void savePet(Pet pet) {
         try {
-            try {
-                statement.execute("INSERT INTO pets");
-            } catch (SQLException e) {
-                createTable();
-            }
+            checkTable();
             statement.execute("INSERT INTO pets" + generatePetValues(pet) + ";");
             updateCurrentSaveId();
         } catch (SQLException e) {
@@ -52,7 +46,16 @@ public class SaveManager {
         }
     }
 
+    private static void checkTable() {
+        try {
+            statement.execute("INSERT INTO pets");
+        } catch (SQLException e) {
+            createTable();
+        }
+    }
+
     public static void loadSaves(ObservableList<HBox> list) {
+        checkTable();
         try (ResultSet result = statement.executeQuery("SELECT * FROM pets;")) {
             while (result.next()) {
                 String type = result.getString("type");
