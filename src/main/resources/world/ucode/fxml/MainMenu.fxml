@@ -1,10 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="world.ucode.control.MainMenuController">
-   <Button mnemonicParsing="false" onAction="#loadGame" text="Continue" />
-   <Button mnemonicParsing="false" onAction="#newGame" text="New Game" />
-   <Button mnemonicParsing="false" onAction="#exitGame" text="Exit" />
-</VBox>
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-image: url(&quot;world/ucode/img/paper-box.jpg&quot;);" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="world.ucode.control.MainMenuController">
+   <VBox alignment="CENTER" layoutX="123.0" prefHeight="400.0" prefWidth="354.0" spacing="30.0">
+      <Button layoutX="112.0" layoutY="193.0" mnemonicParsing="false" onAction="#newGame" prefHeight="30.0" prefWidth="150.0" text="New Game" textAlignment="CENTER">
+         <font>
+            <Font name="Comic Sans MS" size="18.0" />
+         </font>
+      </Button>
+      <Button layoutX="112.0" layoutY="77.0" mnemonicParsing="false" onAction="#loadGame" prefHeight="30.0" prefWidth="150.0" text="Load Game" textAlignment="CENTER">
+         <font>
+            <Font name="Comic Sans MS" size="18.0" />
+         </font>
+      </Button>
+      <Button layoutX="112.0" layoutY="175.0" mnemonicParsing="false" onAction="#exitGame" prefHeight="30.0" prefWidth="150.0" text="Exit" textAlignment="CENTER">
+         <font>
+            <Font name="Comic Sans MS" size="18.0" />
+         </font>
+         <VBox.margin>
+            <Insets top="100.0" />
+         </VBox.margin>
+      </Button>
+   </VBox>
+</Pane>

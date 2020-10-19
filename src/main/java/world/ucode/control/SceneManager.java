@@ -11,6 +11,7 @@ public class SceneManager {
     public enum States {
         MAIN_MENU("/world/ucode/fxml/MainMenu.fxml"),
         CREATE_MENU("/world/ucode/fxml/CreateMenu.fxml"),
+        LOAD_MENU("/world/ucode/fxml/LoadMenu.fxml"),
         PET("/world/ucode/fxml/Pet.fxml"),
         GAME_OVER("/world/ucode/fxml/GameOver.fxml");
 

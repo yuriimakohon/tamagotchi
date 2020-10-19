@@ -16,7 +16,6 @@ public class MainMenuController {
 
     @FXML
     private void loadGame() {
-        PetController.loadPetSave(1);
-        SceneManager.switchScene(SceneManager.States.PET);
+        SceneManager.switchScene(SceneManager.States.LOAD_MENU);
     }
 }

@@ -1,12 +1,17 @@
 package world.ucode.control;
 
+import javafx.collections.ObservableList;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import org.sqlite.SQLiteDataSource;
 import world.ucode.model.pet.Pet;
+import world.ucode.view.LoadMenuView;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class SaveManager {
     private static final SQLiteDataSource dataSource = new SQLiteDataSource();
@@ -47,9 +52,17 @@ public class SaveManager {
         }
     }
 
-    public static void updatePetSave(Pet pet) {
-        try {
-            statement.execute("UPDATE pets SET" + generatePetUpdate(pet) + ";");
+    public static void loadSaves(ObservableList<HBox> list) {
+        try (ResultSet result = statement.executeQuery("SELECT * FROM pets;")) {
+            while (result.next()) {
+                String type = result.getString("type");
+                String name = result.getString("name");
+                String health = String.valueOf(result.getInt("health"));
+                String happiness = String.valueOf(result.getInt("happiness"));
+                HBox hbox = LoadMenuView.createSavePane(type, name, health, happiness);
+                hbox.setUserData(result.getInt("id"));
+                list.add(hbox);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -76,6 +89,14 @@ public class SaveManager {
         updateCurrentSaveId(saveId);
     }
 
+    public static void updatePetSave(Pet pet) {
+        try {
+            statement.execute("UPDATE pets SET" + generatePetUpdate(pet) + ";");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void deletePet(int saveId) {
         try {
             statement.execute("DELETE FROM pets WHERE id = " + saveId + ";");
@@ -88,7 +109,7 @@ public class SaveManager {
         deletePet(currentSaveId);
     }
 
-    private static void updateCurrentSaveId() {
+    public static void updateCurrentSaveId() {
         try (ResultSet result = statement.executeQuery("SELECT last_insert_rowid();")) {
             result.next();
             currentSaveId = result.getInt(1);
@@ -96,8 +117,12 @@ public class SaveManager {
             e.printStackTrace();
         }
     }
-    private static void updateCurrentSaveId(int id) {
+    public static void updateCurrentSaveId(int id) {
         currentSaveId = id;
+    }
+
+    public static int getCurrentSaveId() {
+        return currentSaveId;
     }
 
     private static String generatePetValues(Pet pet) {
