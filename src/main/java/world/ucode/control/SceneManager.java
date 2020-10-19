@@ -32,6 +32,7 @@ public class SceneManager {
             throw new IllegalArgumentException();
         }
         SceneManager.stage = stage;
+        stage.setTitle("Tamagotchi");
 
         for (States state : States.values()) {
             FXMLLoader loader = new FXMLLoader(SceneManager.class.getResource(state.url));
