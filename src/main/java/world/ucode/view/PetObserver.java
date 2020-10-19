@@ -7,4 +7,5 @@ public interface PetObserver {
     void initObserver(Pet pet);
     void updateAllStats(Pet pet);
     void updateStat(Stat stat);
+    void gameOver(Stat.Type reason);
 }

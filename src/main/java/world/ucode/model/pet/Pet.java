@@ -30,9 +30,17 @@ public class Pet implements PetPublisher {
         observer.updateStat(stat);
     }
 
+    @Override
+    public void notifyGameOver(Stat.Type reason) {
+        if (!gameOver)
+            observer.gameOver(reason);
+        gameOver = true;
+    }
+
     // ==============| Pet part |==============
     private String name;
     Species type;
+    private boolean gameOver = false;
     private Stat health;
     private Stat hunger;
     private Stat thirst;
@@ -41,14 +49,11 @@ public class Pet implements PetPublisher {
 
     public void start() {
         Thread thread = new Thread(() -> {
-            Runnable updater = new Runnable() {
-                @Override
-                public void run() {
-                    updateStats();
-                    SaveManager.updatePetSave(getInstance());
-                }
+            Runnable updater = () -> {
+                updateStats();
+                SaveManager.updatePetSave(getInstance());
             };
-            while (true) {
+            while (!gameOver) {
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
@@ -74,15 +79,15 @@ public class Pet implements PetPublisher {
     private void checkProsperity() {
         if (health.getValue() < health.getMaxValue() / 3) {
             happiness.addValue(-2);
-            if (health.getMaxValue() == 0)
-                System.out.println("GAME OVER: HEALTH");
+            if (health.getValue() == 0)
+                notifyGameOver(Stat.Type.HEALTH);
         }
         if (happiness.getValue() < happiness.getMaxValue() / 2) {
             hunger.addValue(-2);
             if (happiness.getValue() < 20) {
                 hunger.addValue(-2);
                 if (happiness.getValue() == 0)
-                    System.out.println("GAME OVER: HAPPINESS");
+                    notifyGameOver(Stat.Type.HAPPINESS);
             }
         }
         if (hunger.getValue() < 40) {
@@ -122,7 +127,7 @@ public class Pet implements PetPublisher {
             cleanliness = new CleanlinessStat(100, -0.3f);
         }
         health = new HealthStat(maxHealth, 0);
-        happiness = new HappinessStat(100, 0);
+        happiness = new HappinessStat(100, -100);
         observer.initObserver(this);
     }
 

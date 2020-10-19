@@ -7,4 +7,5 @@ public interface PetPublisher {
     void registerObserver(PetObserver o);
     void notifyAllStats(Pet pet);
     void notifyStat(Stat stat);
+    void notifyGameOver(Stat.Type reason);
 }

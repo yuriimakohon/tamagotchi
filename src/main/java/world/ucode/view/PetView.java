@@ -1,7 +1,11 @@
 package world.ucode.view;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
+import world.ucode.control.GameOverController;
+import world.ucode.control.SaveManager;
+import world.ucode.control.SceneManager;
 import world.ucode.model.pet.Pet;
 import world.ucode.model.stat.Stat;
 
@@ -50,6 +54,20 @@ public class PetView implements PetObserver {
             setLblHappinessStat(value);
         else if (type == Stat.Type.CLEANLINESS)
             setLblCleanlinessStat(value);
+    }
+
+    @Override
+    public void gameOver(Stat.Type reason) {
+        String strReason;
+        if (reason == Stat.Type.HEALTH) {
+            strReason = "The pet expired... died, if in short";
+        } else {
+            strReason = "The pet did not feel happy and ran away";
+        }
+        GameOverController controller = SceneManager.getSceneLoader(SceneManager.States.GAME_OVER).getController();
+        controller.setGameOverInfo(strReason, pet.getName());
+        SceneManager.switchScene(SceneManager.States.GAME_OVER);
+        SaveManager.deleteCurrentPet();
     }
 
     @Override

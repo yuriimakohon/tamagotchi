@@ -76,6 +76,18 @@ public class SaveManager {
         updateCurrentSaveId(saveId);
     }
 
+    public static void deletePet(int saveId) {
+        try {
+            statement.execute("DELETE FROM pets WHERE id = " + saveId + ";");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void deleteCurrentPet() {
+        deletePet(currentSaveId);
+    }
+
     private static void updateCurrentSaveId() {
         try (ResultSet result = statement.executeQuery("SELECT last_insert_rowid();")) {
             result.next();

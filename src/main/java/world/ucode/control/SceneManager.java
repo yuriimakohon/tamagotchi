@@ -9,9 +9,10 @@ import java.util.HashMap;
 
 public class SceneManager {
     public enum States {
-        MAIN_MENU("/world/ucode/views/MainMenu.fxml"),
-        CREATE_MENU("/world/ucode/views/CreateMenu.fxml"),
-        PET("/world/ucode/views/Pet.fxml");
+        MAIN_MENU("/world/ucode/fxml/MainMenu.fxml"),
+        CREATE_MENU("/world/ucode/fxml/CreateMenu.fxml"),
+        PET("/world/ucode/fxml/Pet.fxml"),
+        GAME_OVER("/world/ucode/fxml/GameOver.fxml");
 
         private final String url;
 
@@ -35,11 +36,16 @@ public class SceneManager {
             FXMLLoader loader = new FXMLLoader(SceneManager.class.getResource(state.url));
             try {
                 Scene scene = new Scene(loader.load());
+                scene.setUserData(loader);
                 scenes.put(state, scene);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    public static FXMLLoader getSceneLoader(SceneManager.States state) {
+        return (FXMLLoader) scenes.get(state).getUserData();
     }
 
     public static void switchScene(States state) {
