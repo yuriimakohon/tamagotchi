@@ -9,38 +9,23 @@ public abstract class PetEvent {
         INJURY,
     }
 
-    protected String name = "Pet event name";
-    protected String description = "Pet event description";
+    protected String name;
+    protected String description;
+    protected boolean negative;
+
+    protected PetEvent(boolean isNegative) {
+        negative = isNegative;
+    }
 
     abstract void runEvent(Pet pet);
 
-    public static void tryEvent(Type type, int chance, Pet pet) {
-        if (randPercent(chance)) {
-            PetEvent event;
-            switch (type) {
-                case INTOXICATION:
-                    event = new PetEventIntoxication();
-                    break;
-                case SATIETY:
-                    event = new PetEventSatiety();
-                    break;
-                case INJURY:
-                    event = new PetEventInjury();
-                    break;
-                default:
-                    throw new IllegalStateException("Unexpected value: " + type);
-            }
-            event.runEvent(pet);
-            pet.notifyAllStats(pet);
-            event.printEventInfo();
-        }
+    public String getName() {
+        return name;
     }
-
-    private static boolean randPercent(int chance) {
-        return chance >= (int) (Math.random() * 101) + 1;
+    public String getDescription() {
+        return description;
     }
-
-    protected void printEventInfo() {
-        System.out.println(name + "\n=================\n" + description + "\n");
+    public boolean isNegative() {
+        return negative;
     }
 }

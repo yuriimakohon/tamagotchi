@@ -8,6 +8,7 @@ class PetEventIntoxication extends PetEvent {
     private final int happinessChanger;
 
     PetEventIntoxication() {
+        super(true);
         healthChanger = -10;
         hungerChanger = -80;
         happinessChanger = -10;

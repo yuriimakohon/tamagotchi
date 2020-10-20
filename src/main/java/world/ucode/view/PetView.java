@@ -6,10 +6,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 import world.ucode.control.GameOverController;
 import world.ucode.control.SaveManager;
 import world.ucode.control.SceneManager;
 import world.ucode.model.pet.Pet;
+import world.ucode.model.petEvent.PetEvent;
 import world.ucode.model.stat.Stat;
 
 public class PetView implements PetObserver {
@@ -21,6 +23,9 @@ public class PetView implements PetObserver {
     @FXML private Label lblHappinessStat;
     @FXML private Label lblCleanlinessStat;
     @FXML private ImageView imageViewPet;
+    @FXML private Label lblPetEventName;
+    @FXML private Label lblPetEventDescription;
+    @FXML private VBox vboxPetEventInfo;
 
     protected PetView() {
         pet.registerObserver(this);
@@ -55,6 +60,20 @@ public class PetView implements PetObserver {
     @Override
     public void updateSkin(int skin) {
         setImageViewPet(skin);
+    }
+
+    @Override
+    public void updatePetEvent(PetEvent event) {
+        if (!vboxPetEventInfo.isVisible())
+            vboxPetEventInfo.setVisible(true);
+
+        lblPetEventName.setText(event.getName());
+        if (event.isNegative())
+            lblPetEventName.setStyle("-fx-text-fill: red");
+        else
+            lblPetEventName.setStyle("-fx-text-fill: green");
+
+        lblPetEventDescription.setText(event.getDescription());
     }
 
     @Override

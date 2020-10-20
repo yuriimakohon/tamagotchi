@@ -3,6 +3,7 @@ package world.ucode.model.pet;
 import javafx.application.Platform;
 import world.ucode.control.SaveManager;
 import world.ucode.model.petEvent.PetEvent;
+import world.ucode.model.petEvent.PetEventManager;
 import world.ucode.model.stat.*;
 import world.ucode.view.PetObserver;
 
@@ -42,10 +43,17 @@ public class Pet implements PetPublisher {
         observer.updateSkin(skin);
     }
 
+    @Override
+    public void notifyPetEvent(PetEvent event) {
+        observer.updatePetEvent(event);
+    }
+
     // ==============| Pet part |==============
     private String name;
     Species type;
     private boolean gameOver = false;
+    private PetEventManager peManager;
+
     private Stat health;
     private Stat hunger;
     private Stat thirst;
@@ -134,6 +142,8 @@ public class Pet implements PetPublisher {
         health = new HealthStat(maxHealth, 0);
         happiness = new HappinessStat(100, 0);
         observer.initObserver(this);
+
+        peManager = new PetEventManager();
         notifySkin(1);
     }
 
@@ -143,15 +153,15 @@ public class Pet implements PetPublisher {
         notifyStat(health);
     }
     public void feed() {
-        PetEvent.tryEvent(PetEvent.Type.INTOXICATION, 10, this);
-        PetEvent.tryEvent(PetEvent.Type.SATIETY, 30, this);
+        peManager.tryEvent(PetEvent.Type.INTOXICATION, 10, this);
+        peManager.tryEvent(PetEvent.Type.SATIETY, 30, this);
 
         hunger.addValue(30);
         cleanliness.addValue(-2);
         notifyStat(hunger);
     }
     public void giveDrink() {
-        PetEvent.tryEvent(PetEvent.Type.INTOXICATION, 7, this);
+        peManager.tryEvent(PetEvent.Type.INTOXICATION, 7, this);
         thirst.addValue(20);
         notifyStat(thirst);
     }
@@ -160,7 +170,7 @@ public class Pet implements PetPublisher {
         notifyStat(cleanliness);
     }
     public void play() {
-        PetEvent.tryEvent(PetEvent.Type.INJURY, 10, this);
+        peManager.tryEvent(PetEvent.Type.INJURY, 10, this);
         happiness.setValue(happiness.getValue() + 10);
         notifyStat(happiness);
     }

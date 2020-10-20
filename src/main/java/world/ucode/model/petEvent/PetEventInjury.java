@@ -7,6 +7,7 @@ class PetEventInjury extends PetEvent {
     private final int happinessChanger;
 
     PetEventInjury() {
+        super(true);
         healthChanger = -50;
         happinessChanger = -35;
         name = "Injury";

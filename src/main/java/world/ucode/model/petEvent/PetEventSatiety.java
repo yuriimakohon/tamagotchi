@@ -7,6 +7,7 @@ class PetEventSatiety extends PetEvent {
     private final int happinessChanger;
 
     PetEventSatiety() {
+        super(false);
         hungerChanger = 10;
         happinessChanger = 7;
         name = "Satiety";
