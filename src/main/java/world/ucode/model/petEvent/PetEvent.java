@@ -7,6 +7,7 @@ public abstract class PetEvent {
         INTOXICATION,
         SATIETY,
         INJURY,
+        CHOKED,
     }
 
     protected String name;

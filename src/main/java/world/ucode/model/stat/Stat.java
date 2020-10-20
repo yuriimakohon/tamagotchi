@@ -34,7 +34,7 @@ public abstract class Stat {
     }
 
     public void setValue(float value) {
-        this.value = Math.min(value, maxValue);
+        this.value = value < 0 ? 0 : Math.min(value, maxValue);
     }
 
     public void addValue(float value) {
@@ -46,7 +46,7 @@ public abstract class Stat {
     }
 
     public void update() {
-        value = value + changer < 0 ? 0 : Math.min(value + changer, maxValue);
+        addValue(changer);
     }
 
 }

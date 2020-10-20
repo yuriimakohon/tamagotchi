@@ -90,25 +90,13 @@ public class Pet implements PetPublisher {
     }
 
     private void checkProsperity() {
-        if (health.getValue() < health.getMaxValue() / 3) {
-            happiness.addValue(-2);
-            if (health.getValue() == 0)
-                notifyGameOver(Stat.Type.HEALTH);
-        }
-        if (happiness.getValue() < happiness.getMaxValue() / 2) {
-            hunger.addValue(-2);
-            if (happiness.getValue() < 20) {
-                hunger.addValue(-2);
-                if (happiness.getValue() == 0)
-                    notifyGameOver(Stat.Type.HAPPINESS);
-            }
-        }
         if (hunger.getValue() < 40) {
             happiness.addValue(-1);
             if (hunger.getValue() == 0) {
                 health.addValue(-3);
                 happiness.addValue(-1);
             }
+            notifyAllStats(this);
         }
         if (thirst.getValue() < 10) {
             happiness.addValue(-0.5f);
@@ -116,6 +104,7 @@ public class Pet implements PetPublisher {
                 health.addValue(-2);
                 happiness.addValue(-0.5f);
             }
+            notifyAllStats(this);
         }
         if (cleanliness.getValue() < 20) {
             happiness.addValue(-2);
@@ -123,6 +112,23 @@ public class Pet implements PetPublisher {
                 health.addValue(-1);
                 happiness.addValue(-3);
             }
+            notifyAllStats(this);
+        }
+        if (health.getValue() < health.getMaxValue() / 3) {
+            happiness.addValue(-2);
+            if (health.getValue() == 0)
+                notifyGameOver(Stat.Type.HEALTH);
+            notifyAllStats(this);
+        }
+        if (happiness.getValue() < happiness.getMaxValue() / 2) {
+            System.out.println(happiness.getValue());
+            hunger.addValue(-2);
+            if (happiness.getValue() < 20) {
+                hunger.addValue(-2);
+                if (happiness.getValue() == 0)
+                    notifyGameOver(Stat.Type.HAPPINESS);
+            }
+            notifyAllStats(this);
         }
     }
 
@@ -153,24 +159,26 @@ public class Pet implements PetPublisher {
         notifyStat(health);
     }
     public void feed() {
-        peManager.tryEvent(PetEvent.Type.INTOXICATION, 10, this);
-        peManager.tryEvent(PetEvent.Type.SATIETY, 30, this);
+        peManager.tryEvent(PetEvent.Type.INTOXICATION, 4, this);
+        peManager.tryEvent(PetEvent.Type.SATIETY, 20, this);
+        peManager.tryEvent(PetEvent.Type.CHOKED, 5, this);
 
         hunger.addValue(30);
         cleanliness.addValue(-2);
         notifyStat(hunger);
     }
     public void giveDrink() {
-        peManager.tryEvent(PetEvent.Type.INTOXICATION, 7, this);
+        peManager.tryEvent(PetEvent.Type.INTOXICATION, 2, this);
+        peManager.tryEvent(PetEvent.Type.CHOKED, 7, this);
         thirst.addValue(20);
         notifyStat(thirst);
     }
     public void clean() {
-        cleanliness.setValue(cleanliness.getMaxValue());
+        cleanliness.addValue(40);
         notifyStat(cleanliness);
     }
     public void play() {
-        peManager.tryEvent(PetEvent.Type.INJURY, 10, this);
+        peManager.tryEvent(PetEvent.Type.INJURY, 7, this);
         happiness.setValue(happiness.getValue() + 10);
         notifyStat(happiness);
     }
