@@ -37,6 +37,11 @@ public class Pet implements PetPublisher {
         gameOver = true;
     }
 
+    @Override
+    public void notifySkin(int skin) {
+        observer.updateSkin(skin);
+    }
+
     // ==============| Pet part |==============
     private String name;
     Species type;
@@ -127,8 +132,9 @@ public class Pet implements PetPublisher {
             cleanliness = new CleanlinessStat(100, -0.3f);
         }
         health = new HealthStat(maxHealth, 0);
-        happiness = new HappinessStat(100, -100);
+        happiness = new HappinessStat(100, 0);
         observer.initObserver(this);
+        notifySkin(1);
     }
 
     // Actions with Pet

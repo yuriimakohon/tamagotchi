@@ -1,7 +1,6 @@
 package world.ucode.model.petEvent;
 
 import world.ucode.model.pet.Pet;
-import world.ucode.model.stat.Stat;
 
 public abstract class PetEvent {
     public enum Type {

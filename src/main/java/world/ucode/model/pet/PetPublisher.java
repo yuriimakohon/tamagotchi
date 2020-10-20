@@ -8,4 +8,5 @@ public interface PetPublisher {
     void notifyAllStats(Pet pet);
     void notifyStat(Stat stat);
     void notifyGameOver(Stat.Type reason);
+    void notifySkin(int skin);
 }

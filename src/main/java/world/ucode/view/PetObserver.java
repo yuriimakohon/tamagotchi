@@ -8,4 +8,5 @@ public interface PetObserver {
     void updateAllStats(Pet pet);
     void updateStat(Stat stat);
     void gameOver(Stat.Type reason);
+    void updateSkin(int skin);
 }

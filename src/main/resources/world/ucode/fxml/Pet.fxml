@@ -1,90 +1,141 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
-      prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="world.ucode.control.PetController">
-   <Label fx:id="lblName" alignment="CENTER" layoutX="127.0" layoutY="14.0" prefHeight="39.0" prefWidth="246.0"
-          text="Name">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="625.0" prefWidth="600.0" style="-fx-background-image: url(&quot;world/ucode/img/paper-box.jpg&quot;);" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="world.ucode.control.PetController">
+   <VBox layoutX="23.0" layoutY="153.0" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+      <children>
+         <Label alignment="CENTER" prefHeight="35.0" prefWidth="103.0" text="Fur">
+            <font>
+               <Font name="Comic Sans MS" size="24.0" />
+            </font>
+         </Label>
+         <RadioButton fx:id="rbtnGinger" mnemonicParsing="false" selected="true" text="Ginger">
+            <font>
+               <Font name="Comic Sans MS" size="20.0" />
+            </font>
+            <toggleGroup>
+               <ToggleGroup fx:id="togglegroupFur" />
+            </toggleGroup>
+         </RadioButton>
+         <RadioButton fx:id="rbtnLight" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="Light" toggleGroup="$togglegroupFur">
+            <font>
+               <Font name="Comic Sans MS" size="20.0" />
+            </font>
+         </RadioButton>
+         <RadioButton fx:id="rbtnDark" layoutX="10.0" layoutY="38.0" mnemonicParsing="false" text="Dark" toggleGroup="$togglegroupFur">
+            <font>
+               <Font name="Comic Sans MS" size="20.0" />
+            </font>
+         </RadioButton>
+      </children>
+   </VBox>
+   <Label fx:id="lblName" alignment="CENTER" layoutX="80.0" layoutY="14.0" prefHeight="51.0" prefWidth="443.0" text="Name">
       <font>
-         <Font name="System Bold" size="21.0"/>
+         <Font name="Comic Sans MS Bold" size="36.0" />
       </font>
    </Label>
-   <HBox layoutY="85.0" prefHeight="279.0" prefWidth="500.0">
-      <VBox alignment="TOP_CENTER" prefHeight="340.0" prefWidth="100.0" spacing="50.0">
-         <Label alignment="CENTER" prefHeight="17.0" prefWidth="113.0" text="Health" textFill="RED">
+   <ImageView fx:id="imageViewPet" fitHeight="256.0" fitWidth="256.0" layoutX="173.0" layoutY="107.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 20, 0,0, -5);">
+      <image>
+         <Image url="@../img/cat1.png" />
+      </image></ImageView>
+   <HBox layoutY="413.0" prefHeight="279.0" prefWidth="600.0">
+      <VBox alignment="TOP_CENTER" prefHeight="340.0" prefWidth="120.0" spacing="10.0">
+         <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(three-pass-box, rgba(150,0,0,0.8), 20, 0,0, -5);"><Image url="@../img/health.png" /></ImageView>
+         <Label fx:id="lblHealthStat" alignment="CENTER" prefHeight="17.0" prefWidth="107.0" text="stat" textFill="#a10000">
             <font>
-               <Font size="20.0"/>
+               <Font name="Comic Sans MS" size="32.0" />
             </font>
          </Label>
-         <Label fx:id="lblHealthStat" alignment="CENTER" prefHeight="17.0" prefWidth="107.0" text="stat">
-            <font>
-               <Font size="32.0"/>
-            </font>
-         </Label>
-         <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#petCure"
-                 prefHeight="25.0" prefWidth="69.0" text="Medicine"/>
+         <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#petCure" prefHeight="25.0" prefWidth="69.0" text="Medicine">
+            <VBox.margin>
+               <Insets />
+            </VBox.margin></Button>
       </VBox>
-      <VBox alignment="TOP_CENTER" layoutX="10.0" layoutY="10.0" prefHeight="340.0" prefWidth="100.0" spacing="50.0">
-         <Label alignment="CENTER" prefHeight="17.0" prefWidth="113.0" text="Hunger" textFill="#c98d4d">
+      <VBox alignment="TOP_CENTER" layoutX="10.0" layoutY="10.0" prefHeight="340.0" prefWidth="120.0" spacing="10.0">
+         <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,150,0.8), 20, 0,0, -5);">
+               <Image url="@../img/thirst.png" />
+         </ImageView>
+         <Label fx:id="lblThirstStat" alignment="CENTER" prefHeight="17.0" prefWidth="107.0" text="stat" textFill="#00076f">
             <font>
-               <Font size="20.0"/>
+               <Font name="Comic Sans MS" size="32.0" />
             </font>
          </Label>
-         <Label fx:id="lblHungerStat" alignment="CENTER" prefHeight="17.0" prefWidth="107.0" text="stat">
+         <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#petGiveDrink" prefHeight="25.0" prefWidth="80.0" text="Give drink">
+            <VBox.margin>
+               <Insets />
+            </VBox.margin>
             <font>
-               <Font size="32.0"/>
+               <Font name="Comic Sans MS" size="12.0" />
             </font>
-         </Label>
-         <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#petFeed"
-                 prefHeight="25.0" prefWidth="59.0" text="Feed"/>
+         </Button>
       </VBox>
-      <VBox alignment="TOP_CENTER" layoutX="10.0" layoutY="10.0" prefHeight="340.0" prefWidth="100.0" spacing="50.0">
-         <Label alignment="CENTER" prefHeight="17.0" prefWidth="113.0" text="Thirst" textFill="#526fff">
-            <font>
-               <Font size="20.0"/>
-            </font>
-         </Label>
-         <Label fx:id="lblThirstStat" alignment="CENTER" prefHeight="17.0" prefWidth="107.0" text="stat">
-            <font>
-               <Font size="32.0"/>
-            </font>
-         </Label>
-         <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#petGiveDrink"
-                 prefHeight="25.0" prefWidth="84.0" text="Give a water"/>
+      <VBox alignment="TOP_CENTER" layoutX="10.0" layoutY="10.0" prefHeight="340.0" prefWidth="120.0" spacing="10.0">
+         <children>
+            <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(three-pass-box, rgba(150,50,0,0.8), 20, 0,0, -5);">
+               <image>
+                  <Image url="@../img/hunger.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="lblHungerStat" alignment="CENTER" prefHeight="17.0" prefWidth="107.0" text="stat" textFill="#5e1300">
+               <font>
+                  <Font name="Comic Sans MS" size="32.0" />
+               </font>
+            </Label>
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#petFeed" prefHeight="25.0" prefWidth="69.0" text="Feed">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </Button>
+         </children>
       </VBox>
-      <VBox alignment="TOP_CENTER" layoutX="110.0" layoutY="10.0" prefHeight="340.0" prefWidth="100.0"
-            spacing="50.0">
-         <Label alignment="CENTER" prefHeight="17.0" prefWidth="113.0" text="Happiness" textFill="#ffae00">
-            <font>
-               <Font size="20.0"/>
-            </font>
-         </Label>
-         <Label fx:id="lblHappinessStat" alignment="CENTER" prefHeight="17.0" prefWidth="107.0" text="stat">
-            <font>
-               <Font size="32.0"/>
-            </font>
-         </Label>
-         <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#petPlay"
-                 prefHeight="25.0" prefWidth="52.0" text="Play"/>
+      <VBox alignment="TOP_CENTER" layoutX="130.0" layoutY="10.0" prefHeight="340.0" prefWidth="120.0" spacing="10.0">
+         <children>
+            <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(three-pass-box, rgba(230,200,0,0.8), 20, 0,0, -5);">
+               <image>
+                  <Image url="@../img/happiness.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="lblHappinessStat" alignment="CENTER" prefHeight="17.0" prefWidth="107.0" text="stat" textFill="#9c7700">
+               <font>
+                  <Font name="Comic Sans MS" size="32.0" />
+               </font>
+            </Label>
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#petPlay" prefHeight="25.0" prefWidth="80.0" text="Play">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <font>
+                  <Font name="Comic Sans MS" size="12.0" />
+               </font>
+            </Button>
+         </children>
       </VBox>
-      <VBox alignment="TOP_CENTER" layoutX="310.0" layoutY="10.0" prefHeight="340.0" prefWidth="100.0"
-            spacing="50.0">
-         <Label alignment="CENTER" prefHeight="17.0" prefWidth="113.0" text="Cleanliness" textFill="#00c614">
-            <font>
-               <Font size="20.0"/>
-            </font>
-         </Label>
-         <Label fx:id="lblCleanlinessStat" alignment="CENTER" prefHeight="17.0" prefWidth="107.0" text="stat">
-            <font>
-               <Font size="32.0"/>
-            </font>
-         </Label>
-         <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#petClean"
-                 prefHeight="25.0" prefWidth="56.0" text="Clean"/>
+      <VBox alignment="TOP_CENTER" layoutX="370.0" layoutY="10.0" prefHeight="340.0" prefWidth="120.0" spacing="10.0">
+         <children>
+            <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(three-pass-box, rgba(50,150,0,0.8), 20, 0,0, -5);">
+               <image>
+                  <Image url="@../img/cleanliness.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="lblCleanlinessStat" alignment="CENTER" prefHeight="17.0" prefWidth="107.0" text="stat" textFill="#5b7900">
+               <font>
+                  <Font name="Comic Sans MS" size="32.0" />
+               </font>
+            </Label>
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#petClean" prefHeight="25.0" prefWidth="80.0" text="Clean">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <font>
+                  <Font name="Comic Sans MS" size="12.0" />
+               </font>
+            </Button>
+         </children>
       </VBox>
    </HBox>
 </Pane>

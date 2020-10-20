@@ -3,6 +3,9 @@ package world.ucode.view;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
+import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import world.ucode.control.GameOverController;
 import world.ucode.control.SaveManager;
 import world.ucode.control.SceneManager;
@@ -17,6 +20,7 @@ public class PetView implements PetObserver {
     @FXML private Label lblThirstStat;
     @FXML private Label lblHappinessStat;
     @FXML private Label lblCleanlinessStat;
+    @FXML private ImageView imageViewPet;
 
     protected PetView() {
         pet.registerObserver(this);
@@ -37,6 +41,20 @@ public class PetView implements PetObserver {
     }
     protected void setLblCleanlinessStat(int value) {
         lblCleanlinessStat.setText(value + "");
+    }
+    protected void setImageViewPet(int skin) {
+        String skinPath = "/world/ucode/img/";
+        if (pet.getType() == Pet.Species.CAT)
+            skinPath += "cat";
+        else
+            skinPath += "dog";
+        skinPath += skin + ".png";
+        imageViewPet.setImage(new Image(skinPath));
+    }
+
+    @Override
+    public void updateSkin(int skin) {
+        setImageViewPet(skin);
     }
 
     @Override
