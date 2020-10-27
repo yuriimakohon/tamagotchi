@@ -68,7 +68,7 @@
                <Font name="Comic Sans MS" size="32.0" />
             </font>
          </Label>
-         <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#petCure" prefHeight="25.0" prefWidth="69.0" text="Medicine">
+         <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#petCure" prefHeight="25.0" prefWidth="69.0" text="Cure">
             <VBox.margin>
                <Insets />
             </VBox.margin></Button>

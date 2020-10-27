@@ -121,7 +121,6 @@ public class Pet implements PetPublisher {
             notifyAllStats(this);
         }
         if (happiness.getValue() < happiness.getMaxValue() / 2) {
-            System.out.println(happiness.getValue());
             hunger.addValue(-2);
             if (happiness.getValue() < 20) {
                 hunger.addValue(-2);
