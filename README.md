@@ -3,7 +3,7 @@
 Little game where you can cure your pet.
 
 <p align="center">
-  <img src="https://i.ibb.co/W59WhN7/2020-10-27-17-10-10.png" alt="photo5443094174451740500" border="0">
+  <img src="https://i.ibb.co/LRwzFDB/2020-10-27-17-10-10.png" alt="photo5443094174451740500" border="0">
 </p>
 
 ## Installation
